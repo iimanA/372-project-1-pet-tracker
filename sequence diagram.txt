@@ -8,9 +8,10 @@ User->UserInterface: Enter file name
 UserInterface->PetCompany: addAnimal(fileName)
 PetCompany->file:read file
 file->PetCompany: raw data
-PetCompany->JSONParser: raw data
+PetCompany->JSONParser: JSONParser.parse (raw data)
 JSONParser->PetCompany: JSONObject
 loop all keys of JSONObject
+    loop all animal in JSONArray
     create Animal
     PetCompany->Animal: new
     alt shelter with that ID hasn't existed
@@ -18,4 +19,5 @@ loop all keys of JSONObject
         PetCompany->Shelter: new Shelter
     end
     PetCompany->Shelter: addAnimal(Animal)
+    end
 end
