@@ -1,4 +1,4 @@
-[200~package main.project1.ui;
+package main.project1.ui;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -18,7 +18,7 @@ import java.util.StringTokenizer;
 /**
  * Class UserInterface will interact with user to provide the functionalities
  * that they want
- *
+ * Nisa
  * Project 1 Class ICS 372
  */
 public class UserInterface {
@@ -39,6 +39,10 @@ public class UserInterface {
 	 * information from our sample input "Project1_input.json" when started
 	 *
 	 */
+
+	private UserInterface() {
+		company = new PetCompany("Project1_input.json");
+	}
 	public static UserInterface instance() {
 		if (userInterface == null) {
 			return userInterface = new UserInterface();
@@ -83,7 +87,7 @@ public class UserInterface {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		} catch (java.text.ParseException e) {
+		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 	}
@@ -133,7 +137,8 @@ public class UserInterface {
 		String shelterId = getToken("Enter Shelter ID");
 		result = company.exportAnimalListJSON(shelterId);
 		if (result != null) {
-			System.out.println(result); // COME BACK TO MEE
+			Gson gson = new GsonBuilder().setPrettyPrinting().create();
+			System.out.println( gson.toJson(result));
 		} else {
 			System.out.println("Failed: Sheter ID Invaild");
 		}
@@ -150,8 +155,15 @@ public class UserInterface {
 		String shelterId = getToken("Enter Shelter ID");
 		result = company.showAnimalList(shelterId);
 		if (result != null) {
-			for (Map.Entry<String, Animal> entry : result.entrySet())
-				System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue());
+			for (Map.Entry<String, Animal> entry : result.entrySet()) {
+//				System.out.println("Key = " + entry.getKey() + ", Value = " + entry.getValue().toString());
+				System.out.printf("Animal id %s \n", entry.getValue().getId());
+				System.out.printf("   Name: %s \n", entry.getValue().getName());
+				System.out.printf("   Type: %s \n", entry.getValue().getAnimalType());
+				System.out.printf("   Weight: %s \n", entry.getValue().getWeight());
+				System.out.printf("   Receipt Date: %s \n", entry.getValue().getReceiptDate());
+				System.out.printf("   Shelter ID: %s \n", entry.getValue().getShelterId());
+			}
 		} else {
 			System.out.println("Failed: Sheter ID Invaild");
 		}
