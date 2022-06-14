@@ -7,7 +7,7 @@ import java.util.Date;
 
 /**
  * Class Animal contains information of an animal
- *
+ * Emma
  * Project 1
  * Class ICS 372
  */
@@ -26,12 +26,13 @@ public class Animal {
      * @param animalJson a JSONObject contains animal information
      */
     public Animal(JSONObject animalJson) {
-        String name = (String) animalJson.get("animal_name");
-        String animalId = (String) animalJson.get("animal_id");
-        Float weight = (Float) animalJson.get("animal_weight");
-        String shelterId = (String) animalJson.get("shelter_id");
-        String type = (String) animalJson.get("animal_type");
-        Date receiptDate = (Date) animalJson.get("receipt_date");
+        this.name = (String) animalJson.get("animal_name");
+        this.animalId = (String) animalJson.get("animal_id");
+        String weightString = String.valueOf(animalJson.get("weight"));
+        this.weight = Float.parseFloat(weightString);
+        this.shelterId = (String) animalJson.get("shelter_id");
+        this.animalType = (String) animalJson.get("animal_type");
+        this.receiptDate = new Date((long) animalJson.get("receipt_date"));
     }
 
 
