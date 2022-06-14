@@ -4,6 +4,7 @@ import org.json.simple.JSONObject;
 
 import java.util.Date;
 
+
 /**
  * Class Animal contains information of an animal
  *
@@ -18,120 +19,134 @@ public class Animal {
     private String animalType;
     private Date receiptDate;
 
+
     /**
      * Constructor of an animal
-     * @param animalJson a JSONObject contains animal information
      *
+     * @param animalJson a JSONObject contains animal information
      */
-    public Animal (JSONObject animalJson) {
-
+    public Animal(JSONObject animalJson) {
+        String name = (String) animalJson.get("animal_name");
+        String animalId = (String) animalJson.get("animal_id");
+        Float weight = (Float) animalJson.get("animal_weight");
+        String shelterId = (String) animalJson.get("shelter_id");
+        String type = (String) animalJson.get("animal_type");
+        Date receiptDate = (Date) animalJson.get("receipt_date");
     }
+
 
     /**
      * Set ID
-     * @param animalId new ID for this animal
      *
+     * @param animalId new ID for this animal
      */
-    public void setId (String animalId) {
-
+    public void setId(String animalId) {
+        this.animalId = animalId;
     }
 
     /**
      * Return current ID
-     * @return animalId
      *
+     * @return animalId
      */
-    public String getId () {
-
+    public String getId() {
+        return animalId;
     }
 
     /**
      * Set shelter ID
-     * @param shelterId new shelter ID for this animal
      *
+     * @param shelterId new shelter ID for this animal
      */
-    public void setShelterId (String shelterId) {
-
+    public void setShelterId(String shelterId) {
+        this.shelterId = shelterId;
     }
 
     /**
      * Return current shelter ID
-     * @return shelterId
      *
+     * @return shelterId
      */
-    public String getShelterId () {
-
+    public String getShelterId() {
+        return shelterId;
     }
 
     /**
      * Set name
-     * @param name new name for this animal
      *
+     * @param name new name for this animal
      */
-    public void setName (String name) {
-
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
      * Return current name
-     * @return name
      *
+     * @return name
      */
-    public String getName () {
-
+    public String getName() {
+        return name;
     }
 
     /**
      * Set receipt date
-     * @param receiptDate new receipt date for this animal
      *
+     * @param receiptDate new receipt date for this animal
      */
-    public void setReceiptDate (Date receiptDate) {
-
+    public void setReceiptDate(Date receiptDate) {
+        this.receiptDate = receiptDate;
     }
 
     /**
      * Return current receipt date
-     * @return receiptDate
      *
+     * @return receiptDate
      */
-    public Date getReceiptDate () {
 
+    public Date getReceiptDate() {
+        return receiptDate;
     }
 
     /**
      * Set weight
-     * @param weight new weight for this animal
      *
+     * @param weight new weight for this animal
      */
-    public void setWeight (long weight) {
-
+    public void setWeight(float weight) {
+        this.weight = weight;
     }
 
     /**
      * Return current weight
-     * @return weight
      *
+     * @return weight
      */
-    public long getWeight () {
-
+    public float getWeight() {
+        return weight;
     }
 
     /**
      * Set animal type
-     * @param animalType new type for this animal
      *
+     * @param animalType new type for this animal
      */
-    public void setAnimalType(String animalType) {
 
+    public void setAnimalType(String animalType) {
+        this.animalType = animalType;
     }
 
     /**
      * Return current animal type
-     * @return animalType
      *
+     * @return animalType
      */
-    public String getAnimalType() {
 
+    public String getAnimalType() {
+        return animalType;
     }
-}
+
+} //end of animal class
+
+
+

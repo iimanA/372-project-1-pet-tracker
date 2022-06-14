@@ -33,7 +33,8 @@ public class Shelter {
      *
      */
     public void addAnimal (Animal animal) {
-        this.shelterId.add(animal);
+        String key = animal.getId();
+        this.animalList.put(key,animal);
     }
 
     /**
@@ -92,7 +93,7 @@ public class Shelter {
         shelterId = id;
     }
     public String getId() {
-        return id;
+        return shelterId;
     }
 }
 
