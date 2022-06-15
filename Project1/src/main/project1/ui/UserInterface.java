@@ -59,7 +59,7 @@ public class UserInterface {
 	 * current animals for each shelter - Type 0 to quit
 	 *
 	 */
-	public void showMenu() {
+	private void showMenu() {
 		System.out.println("Enter a number between 0 and 6 as explained below:");
 		System.out.println(QUIT + " to Quit\n");
 		System.out.println(ADD_ANIMAL + " to add new animal to our shelter");
@@ -79,7 +79,7 @@ public class UserInterface {
 	 * @catch IOException, ParseException, ClassCastException
 	 *
 	 */
-	public void addAnimal() {
+	private void addAnimal() {
 		String name = getToken("Enter file name");
 		try {
 			company.addAnimal(name);
@@ -98,7 +98,7 @@ public class UserInterface {
 	 * inform the user
 	 *
 	 */
-	public void enableReceivingAnimal() {
+	private void enableReceivingAnimal() {
 		int result;
 		String shelterId = getToken("Enter Shelter ID");
 		result = company.enableReceivingAnimal(shelterId);
@@ -115,7 +115,7 @@ public class UserInterface {
 	 * inform the user
 	 *
 	 */
-	public void disableReceivingAnimal() {
+	private void disableReceivingAnimal() {
 		int result;
 		String shelterId = getToken("Enter Shelter ID");
 		result = company.disableReceivingAnimal(shelterId);
@@ -132,7 +132,7 @@ public class UserInterface {
 	 * the user Print the JSONObject to the screen
 	 *
 	 */
-	public void exportAnimalListJSON() {
+	private void exportAnimalListJSON() {
 		JSONObject result;
 		String shelterId = getToken("Enter Shelter ID");
 		result = company.exportAnimalListJSON(shelterId);
@@ -150,7 +150,7 @@ public class UserInterface {
 	 * the list of animals to the screen in a nice way
 	 *
 	 */
-	public void showAnimalList() {
+	private void showAnimalList() {
 		Map<String, Animal> result;
 		String shelterId = getToken("Enter Shelter ID");
 		result = company.showAnimalList(shelterId);
@@ -169,7 +169,7 @@ public class UserInterface {
 		}
 	}
 
-	public String getToken(String prompt) {
+	private String getToken(String prompt) {
 		do {
 			try {
 				System.out.println(prompt);
@@ -184,7 +184,7 @@ public class UserInterface {
 		} while (true);
 	}
 
-	public int getCommand() {
+	private int getCommand() {
 		do {
 			try {
 				int value = Integer.parseInt(getToken("Enter command:" + MENU + " for Menu"));
@@ -230,8 +230,7 @@ public class UserInterface {
 	}
 
 	public static void main(String[] args) {
-		UserInterface ui = new UserInterface();
+		UserInterface ui = UserInterface.instance();
 		ui.run();
 	}
 }
-
