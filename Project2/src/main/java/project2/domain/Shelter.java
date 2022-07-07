@@ -35,11 +35,11 @@ public class Shelter {
      *
      */
     public void addAnimal (Animal animal) {
-        String key = animal.getId();
+        String key = animal.getAnimalId();
         if (inTaking) {
             this.animalList.put(key, animal);
         } else {
-            System.out.printf("Cannot add animal id %s: shelter id %s has stopped receiving animal \n", animal.getId(), shelterId);
+            System.out.printf("Cannot add animal id %s: shelter id %s has stopped receiving animal \n", animal.getAnimalId(), shelterId);
         }
     }
 
@@ -56,7 +56,7 @@ public class Shelter {
             animalJSON.put("shelter_id", animal.getShelterId());
             animalJSON.put("animal_type", animal.getAnimalType());
             animalJSON.put("animal_name", animal.getName());
-            animalJSON.put("animal_id", animal.getId());
+            animalJSON.put("animal_id", animal.getAnimalId());
             animalJSON.put("weight", animal.getWeight());
             animalJSON.put("receipt_date", animal.getReceiptDate().getTime());
             animalJSONArray.add(animalJSON);

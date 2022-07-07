@@ -35,13 +35,22 @@ public class Animal {
         this.receiptDate = new Date((long) animalJson.get("receipt_date"));
     }
 
+    public Animal (String name, String animalId, float weight, String shelterId, String animalType, Date receiptDate) {
+        this.name = name;
+        this.animalId = animalId;
+        this.weight = weight;
+        this.shelterId = shelterId;
+        this.animalType = animalType;
+        this.receiptDate = receiptDate;
+    }
 
-    public void setId(String animalId) {
+
+    public void setAnimalId(String animalId) {
         this.animalId = animalId;
     }
 
 
-    public String getId() {
+    public String getAnimalId() {
         return animalId;
     }
 

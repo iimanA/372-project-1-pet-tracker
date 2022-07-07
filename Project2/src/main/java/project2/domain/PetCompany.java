@@ -26,7 +26,7 @@ public class PetCompany {
      *
      * @param fileName name of the file that will be used as input. This file should be placed under resources folder
      */
-    public PetCompany(String fileName) {
+    public PetCompany() {
 //        shelterList = new HashMap<>();
 //        try {
 //            addAnimal(fileName);
@@ -129,14 +129,14 @@ public class PetCompany {
         return shelter.getAnimalList ();
     }
 
-    public String getAnimalInfo (String animalId) {
+    public Animal getAnimalInfo (String animalId) {
         IShelterDataMapper shelterDataMapper = new ShelterDataMapper();
         Map <String, Shelter> shelterList = shelterDataMapper.getShelterList ();
         for (String key : shelterList.keySet()) {
             Shelter shelter = shelterList.get(key);
             Map <String, Animal> animalList = shelter.getAnimalList();
             if (animalList.get(animalId) != null) {
-                return shelter.getId();
+                return animalList.get(animalId);
             }
         }
         return null;

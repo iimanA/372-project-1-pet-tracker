@@ -8,4 +8,6 @@ module project2.ui {
     exports project2.ui;
     exports project2.controller;
     opens project2.controller to javafx.fxml;
+    opens project2.domain to javafx.fxml;
+    exports project2.domain;
 }
