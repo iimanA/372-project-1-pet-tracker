@@ -13,6 +13,7 @@ import java.util.Map;
  * Class ICS 372
  */
 public class Shelter {
+    private String name;
     private String shelterId;
     private Boolean inTaking;
     private Map<String, Animal> animalList;
