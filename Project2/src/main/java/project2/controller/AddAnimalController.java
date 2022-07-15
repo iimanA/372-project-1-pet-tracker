@@ -10,9 +10,11 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import project2.domain.PetCompany;
 
 import java.io.IOException;
 import java.net.URL;
+import org.json.simple.parser.ParseException;
 import java.util.ResourceBundle;
 
 public class AddAnimalController implements Initializable {
@@ -35,7 +37,16 @@ public class AddAnimalController implements Initializable {
     @FXML
     void onImportClick(ActionEvent event) {
         String type = cbType.getValue();
-        lbResult.setText(type + " " + tfFileName.getText());
+        PetCompany petCompany = new PetCompany();
+        try {
+            petCompany.addAnimal(tfFileName.getText(), type);
+        } catch (IOException e) {
+            lbResult.setText ("Error Importing: Please put your input file under resources folder with the correct name");
+        } catch (ParseException e) {
+            lbResult.setText ("Please make sure that the file contains correct data type");
+        } catch (ClassCastException e) {
+            lbResult.setText ("Please make sure that the format of the file is similar to the format of the example input file");
+        }
     }
 
         @FXML

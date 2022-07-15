@@ -73,22 +73,12 @@ public class MainController {
     @FXML
     void onExportJSONClick(ActionEvent event) {
         PetCompany petCompany = new PetCompany();
-        int result = petCompany.exportAnimalList(tfShelterId.getText(), "JSON");
-        if (result == -1) {
-            lbResult.setText("Export Error, please check your shelter ID");
-        } else {
-            lbResult.setText("Export Succeed");
-        }
+        petCompany.exportAnimalList("JSON");
     }
 
     @FXML
     void onExportXMLClick(ActionEvent event) {
         PetCompany petCompany = new PetCompany();
-        int result = petCompany.exportAnimalList(tfShelterId.getText(), "XML");
-        if (result == -1) {
-            lbResult.setText("Export Error, please check your shelter ID");
-        } else {
-            lbResult.setText("Export Succeed");
-        }
+        petCompany.exportAnimalList("XML");
     }
 }

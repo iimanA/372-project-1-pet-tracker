@@ -15,6 +15,7 @@ import javafx.stage.Stage;
 import project2.domain.Animal;
 import project2.domain.Data;
 import project2.domain.PetCompany;
+import project2.domain.Shelter;
 
 import java.io.IOException;
 import java.net.URL;
@@ -41,16 +42,18 @@ public class ShelterInfoController implements Initializable {
     private TableColumn<Animal, Float> weight;
     @FXML
     private ToggleButton tbInTaking;
+    private Shelter shelter;
+    private PetCompany petCompany = new PetCompany();
 
 
     @FXML
     void onInTakingButton(ActionEvent event) {
-        PetCompany petCompany = new PetCompany();
         if (tbInTaking.isSelected()) {
             lbInTaking.setText("In taking: Enabled");
-//            petCompany.enableReceivingAnimal(???);
+            petCompany.enableReceivingAnimal(shelter.getId());
         } else {
             lbInTaking.setText("In taking: Disabled");
+            petCompany.disableReceivingAnimal(shelter.getId());
         }
     }
 
@@ -70,22 +73,33 @@ public class ShelterInfoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        lbShelterIInfo.setText("Shelter" + Data.text);
-        lbInTaking.setText("In Taking: Enable");
-        tbInTaking.setSelected(true);
-        initCell();
-        ArrayList <Animal> animalList = new ArrayList<>();
-        Date date = new Date(15153);
-        Float the_weight = Float.parseFloat("2.0");
-        Animal animal1 = new Animal ("Hihi super long long long name to see if it work", "123",the_weight, "123", "cat", date );
-        Animal animal2 = new Animal ("Haha", "124",the_weight, "123", "cat", date );
-        animalList.add (animal1);
-        animalList.add (animal2);
+        shelter = petCompany.getShelterInfo(Data.text);
+
+        if (shelter == null) {
+            lbShelterIInfo.setText("Invalid Shelter ID");
+            tbInTaking.setVisible(false);
+            tvAnimal.setVisible(false);
+        } else {
+            initTable();
+            initShelterInfo();
+        }
+    }
+
+    private void initShelterInfo() {
+        lbShelterIInfo.setText("Shelter " + shelter.getName() + " (id: " + shelter.getId() + ")");
+        if (shelter.getInTaking()) {
+            lbInTaking.setText("In Taking: Enable");
+            tbInTaking.setSelected(true);
+        } else {
+            lbInTaking.setText("In Taking: Disable");
+            tbInTaking.setSelected(false);
+        }
+        ArrayList <Animal> animalList = new ArrayList<>(shelter.getAnimalList().values());
         ObservableList <Animal> list = FXCollections.observableList(animalList);
         tvAnimal.setItems(list);
     }
 
-    private void initCell () {
+    private void initTable() {
         name.setCellFactory(tc -> {
             TableCell<Animal, String> cell = new TableCell<>();
             Text text = new Text();

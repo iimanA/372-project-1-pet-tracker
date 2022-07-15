@@ -20,12 +20,6 @@ import org.json.simple.parser.*;
  */
 public class PetCompany {
 
-    /**
-     * Constructor for PetCompany. Will load infor from a JSON file and create a shelterList objects contains
-     * information of all shelters and animals in that JSON
-     *
-     * @param fileName name of the file that will be used as input. This file should be placed under resources folder
-     */
     public PetCompany() {
 //        shelterList = new HashMap<>();
 //        try {
@@ -53,10 +47,10 @@ public class PetCompany {
         Path resourceDirectory = Path.of("src", "resources", fileName);
         String absolutePath = resourceDirectory.toFile().getAbsolutePath();
         IDataIO fileData = DataIOFactory.get (type);
-        ArrayList <Shelter> shelterList = fileData.convert (absolutePath);
+        Map <String, Shelter> shelterList = fileData.convert (absolutePath);
         IAnimalDataMapper animalDataMapper = new AnimalDataMapper();
-        for (int i = 0; i < shelterList.size(); i++) {
-            Map <String, Animal> animalList = shelterList.get(i).getAnimalList();
+        for (String shelterId : shelterList.keySet()) {
+            Map <String, Animal> animalList = shelterList.get(shelterId).getAnimalList();
             for (String key : animalList.keySet())  {
                 animalDataMapper.insert (animalList.get(key));
             }
@@ -100,18 +94,16 @@ public class PetCompany {
     /**
      * Export all animals in shelter with ID shelterId to a JSONObject
      *
-     * @param shelterId ID of the shelter that should be export
+     * @param type type of file that should be export
      * @return JSONObject of the list of animals in the shelter
      * @return null if the shelter ID doesn't exist
      *
      */
-    public int exportAnimalList (String shelterId, String type) {
+    public void exportAnimalList (String type) {
         IShelterDataMapper shelterDataMapper = new ShelterDataMapper();
-        Shelter shelter = shelterDataMapper.get (shelterId);
-        if (shelter == null) return -1;
+        Map<String, Shelter> shelterList = shelterDataMapper.getShelterList ();
         IDataIO dataIO = DataIOFactory.get(type);
-        dataIO.dataExport (shelter);
-        return 0;
+        dataIO.dataExport (shelterList);
     }
 
     /**
@@ -132,6 +124,7 @@ public class PetCompany {
     public Animal getAnimalInfo (String animalId) {
         IShelterDataMapper shelterDataMapper = new ShelterDataMapper();
         Map <String, Shelter> shelterList = shelterDataMapper.getShelterList ();
+        if (shelterList == null) return null;
         for (String key : shelterList.keySet()) {
             Shelter shelter = shelterList.get(key);
             Map <String, Animal> animalList = shelter.getAnimalList();
@@ -146,5 +139,16 @@ public class PetCompany {
         IShelterDataMapper shelterDataMapper = new ShelterDataMapper();
         Shelter shelter = shelterDataMapper.get (shelterId);
         return shelter;
+    }
+
+    public String[] getShelterList () {
+        IShelterDataMapper shelterDataMapper = new ShelterDataMapper();
+        Map<String, Shelter> shelterMap = shelterDataMapper.getShelterList();
+        String[] shelterList = new String[shelterMap.size()];
+        int i = 0;
+        for (String key: shelterMap.keySet()) {
+            shelterList[i] = "Shelter " + shelterMap.get(key).getName() + "(id: " + key + ")";
+        }
+        return shelterList;
     }
 }

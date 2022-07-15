@@ -111,5 +111,13 @@ public class Shelter {
     public String getId() {
         return shelterId;
     }
+
+    public String getName () {
+        return name;
+    }
+
+    public void setName (String name) {
+        this.name = name;
+    }
 }
 
