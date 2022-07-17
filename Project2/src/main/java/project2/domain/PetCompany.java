@@ -1,5 +1,6 @@
 package project2.domain;
 
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Path;
@@ -20,17 +21,10 @@ import org.json.simple.parser.*;
  */
 public class PetCompany {
 
+    public static final int FAILED = -1;
+    public static final int SUCCESS = 0;
+
     public PetCompany() {
-//        shelterList = new HashMap<>();
-//        try {
-//            addAnimal(fileName);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        } catch (ClassCastException e) {
-//            e.printStackTrace();
-//        }
     }
 
 
@@ -43,18 +37,42 @@ public class PetCompany {
      * @throws ClassCastException if the file doesnt have the same format as the sample file
      *
      */
-    public void addAnimal (String fileName, String type) throws IOException, ParseException, ClassCastException{
-        Path resourceDirectory = Path.of("src", "resources", fileName);
-        String absolutePath = resourceDirectory.toFile().getAbsolutePath();
+    public String addAnimal (String fileName, String type) throws IOException, ParseException, ClassCastException, FileNotFoundException {
         IDataIO fileData = DataIOFactory.get (type);
-        Map <String, Shelter> shelterList = fileData.convert (absolutePath);
+        Map <String, Shelter> shelterList = fileData.convert (fileName);
         IAnimalDataMapper animalDataMapper = new AnimalDataMapper();
+        IShelterDataMapper shelterDataMapper = new ShelterDataMapper();
+        String errorNote = "";
+        if (shelterList == null) {
+            errorNote += "Nothing to import!\n";
+            return errorNote;
+        }
         for (String shelterId : shelterList.keySet()) {
+            Shelter shelter = shelterDataMapper.get(shelterId);
+            if (shelter == null) {
+                shelterDataMapper.insert(shelterList.get(shelterId));
+            } else {
+                if (!shelterList.get(shelterId).getName().equals(shelter.getName())) {
+                    String error = String.format("Shelter %s already existed with a different name\n", shelter.getId());
+                    errorNote += error;
+                }
+                if (shelter.getInTaking() == false) {
+                    String error = String.format("Shelter %s has stopped receiving animal. Add animals skipped!\n", shelter.getId());
+                    errorNote += error;
+                    continue;
+                }
+            }
             Map <String, Animal> animalList = shelterList.get(shelterId).getAnimalList();
             for (String key : animalList.keySet())  {
-                animalDataMapper.insert (animalList.get(key));
+                Animal animal = animalDataMapper.get(animalList.get(key).getAnimalId());
+                if (animal == null) {
+                    animalDataMapper.insert(animalList.get(key));
+                } else {
+                    errorNote += String.format("Animal %s already exist in shelter %s\n", animal.getAnimalId(), animal.getShelterId());
+                }
             }
         }
+        return errorNote;
     }
 
     /**
@@ -68,10 +86,10 @@ public class PetCompany {
     public int enableReceivingAnimal (String shelterId) {
         IShelterDataMapper shelterDataMapper = new ShelterDataMapper();
         Shelter shelter = shelterDataMapper.get (shelterId);
-        if (shelter == null) return -1;
+        if (shelter == null) return FAILED;
         shelter.setInTaking (true);
         shelterDataMapper.update (shelter);
-        return 0;
+        return SUCCESS;
     }
 
     /**
@@ -85,10 +103,10 @@ public class PetCompany {
     public int disableReceivingAnimal (String shelterId) {
         IShelterDataMapper shelterDataMapper = new ShelterDataMapper();
         Shelter shelter = shelterDataMapper.get (shelterId);
-        if (shelter == null) return -1;
+        if (shelter == null) return FAILED;
         shelter.setInTaking (false);
         shelterDataMapper.update (shelter);
-        return 0;
+        return SUCCESS;
     }
 
     /**
@@ -99,11 +117,17 @@ public class PetCompany {
      * @return null if the shelter ID doesn't exist
      *
      */
-    public void exportAnimalList (String type) {
+    public int exportAnimalList (String type) {
         IShelterDataMapper shelterDataMapper = new ShelterDataMapper();
         Map<String, Shelter> shelterList = shelterDataMapper.getShelterList ();
         IDataIO dataIO = DataIOFactory.get(type);
-        dataIO.dataExport (shelterList);
+        try {
+            dataIO.dataExport (shelterList);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            return FAILED;
+        }
+        return SUCCESS;
     }
 
     /**
@@ -122,17 +146,10 @@ public class PetCompany {
     }
 
     public Animal getAnimalInfo (String animalId) {
-        IShelterDataMapper shelterDataMapper = new ShelterDataMapper();
-        Map <String, Shelter> shelterList = shelterDataMapper.getShelterList ();
-        if (shelterList == null) return null;
-        for (String key : shelterList.keySet()) {
-            Shelter shelter = shelterList.get(key);
-            Map <String, Animal> animalList = shelter.getAnimalList();
-            if (animalList.get(animalId) != null) {
-                return animalList.get(animalId);
-            }
-        }
-        return null;
+        IAnimalDataMapper animalDataMapper = new AnimalDataMapper();
+        Animal animal = animalDataMapper.get(animalId);
+
+        return animal;
     }
 
     public Shelter getShelterInfo (String shelterId) {
@@ -147,7 +164,8 @@ public class PetCompany {
         String[] shelterList = new String[shelterMap.size()];
         int i = 0;
         for (String key: shelterMap.keySet()) {
-            shelterList[i] = "Shelter " + shelterMap.get(key).getName() + "(id: " + key + ")";
+            shelterList[i] = key + " - " + shelterMap.get(key).getName();
+            i++;
         }
         return shelterList;
     }

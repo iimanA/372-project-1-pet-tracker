@@ -1,5 +1,7 @@
 package project2.domain;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class ShelterDataMapper implements IShelterDataMapper{
@@ -11,6 +13,7 @@ public class ShelterDataMapper implements IShelterDataMapper{
      */
     @Override
     public Shelter get(String shelterId) {
+
         return null;
     }
 
@@ -32,10 +35,16 @@ public class ShelterDataMapper implements IShelterDataMapper{
 
     @Override
     public void delete(String shelterId) {
-
+        //Isn't required for this project
     }
 
     public Map<String, Shelter> getShelterList () {
-       return null;
+        return null;
     }
+
+    private Map<String, Animal> getAnimalList (String shelterId) {
+
+        return null;
+    }
+
 }

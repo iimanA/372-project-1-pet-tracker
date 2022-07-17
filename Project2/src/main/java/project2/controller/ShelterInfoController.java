@@ -13,7 +13,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import project2.domain.Animal;
-import project2.domain.Data;
+import project2.domain.MyBuffer;
 import project2.domain.PetCompany;
 import project2.domain.Shelter;
 
@@ -73,7 +73,7 @@ public class ShelterInfoController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        shelter = petCompany.getShelterInfo(Data.text);
+        shelter = petCompany.getShelterInfo(MyBuffer.text);
 
         if (shelter == null) {
             lbShelterIInfo.setText("Invalid Shelter ID");

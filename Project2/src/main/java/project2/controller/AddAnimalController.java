@@ -12,6 +12,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import project2.domain.PetCompany;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.URL;
 import org.json.simple.parser.ParseException;
@@ -37,15 +38,22 @@ public class AddAnimalController implements Initializable {
     @FXML
     void onImportClick(ActionEvent event) {
         String type = cbType.getValue();
-        PetCompany petCompany = new PetCompany();
-        try {
-            petCompany.addAnimal(tfFileName.getText(), type);
-        } catch (IOException e) {
-            lbResult.setText ("Error Importing: Please put your input file under resources folder with the correct name");
-        } catch (ParseException e) {
-            lbResult.setText ("Please make sure that the file contains correct data type");
-        } catch (ClassCastException e) {
-            lbResult.setText ("Please make sure that the format of the file is similar to the format of the example input file");
+        if (type != null) {
+            PetCompany petCompany = new PetCompany();
+            try {
+                String errorNote = petCompany.addAnimal(tfFileName.getText(), type);
+                lbResult.setText("Import Success!\n" + errorNote);
+            } catch (FileNotFoundException e) {
+                lbResult.setText("Error Importing: Please put your input file under resources folder with the correct name");
+            } catch (IOException e) {
+                lbResult.setText("Error Importing: Please put your input file under resources folder with the correct name");
+            } catch (ParseException e) {
+                lbResult.setText("Please make sure that the file contains correct data type");
+            } catch (ClassCastException e) {
+                lbResult.setText("Please make sure that the format of the file is similar to the format of the example input file");
+            }
+        } else {
+            lbResult.setText("Please pick the type of file");
         }
     }
 

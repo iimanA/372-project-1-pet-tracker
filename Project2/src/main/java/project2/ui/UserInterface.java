@@ -12,7 +12,7 @@ public class UserInterface extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(UserInterface.class.getResource("main-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("Pet Company");
+        stage.setTitle("Animal Tracker");
         stage.setScene(scene);
         stage.show();
     }

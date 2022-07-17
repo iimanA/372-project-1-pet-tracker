@@ -24,9 +24,16 @@ public class Shelter {
      *
      */
     public Shelter(String shelterId) {
-
         this.shelterId = shelterId;
         this.inTaking = true;
+        this.name = "";
+        animalList = new HashMap<> ();
+    }
+
+    public Shelter (String shelterId, String name) {
+        this.shelterId = shelterId;
+        this.inTaking = true;
+        this.name = name;
         animalList = new HashMap<> ();
     }
 
@@ -37,11 +44,7 @@ public class Shelter {
      */
     public void addAnimal (Animal animal) {
         String key = animal.getAnimalId();
-        if (inTaking) {
-            this.animalList.put(key, animal);
-        } else {
-            System.out.printf("Cannot add animal id %s: shelter id %s has stopped receiving animal \n", animal.getAnimalId(), shelterId);
-        }
+        this.animalList.put(key, animal);
     }
 
     /**
