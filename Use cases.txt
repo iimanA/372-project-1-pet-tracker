@@ -1,0 +1,42 @@
+Julia
+Use Case Name: Find the Shelter that animal is located in
+Primary Actor: User
+Stakeholders: Only id of the shelter that this animal is in will be showed up
+Preconditions: The user has access to the software, the user knows the id of the animal that they want to find
+Success Conditions: The user got the id of the shelter that this animal is in
+Main Success Scenario: User type in the id of the animal that they want to find. User clicks “Search”. On the screen, the id of the Shelter that this animal is in will be showed up.
+Alternate Scenarios: User type in the id of the animal that they want to find. User clicks “Search”. On the screen, an error message shows that there is no animal with that id. User type in the correct id and click Search again. This time, the id of the Shelter that this animal is in shows up on the screen.
+Frequency of Occurrence: everytime the user want to find the shelter of any animal
+
+
+Nisa
+Use Case Name: Retaining Animal/Shelter data previously entered when program starts up. 
+Primary Actor: System 
+Stakeholders: Everyone is looking for a method that will allow all the previously entered data to be saved within the program every time it is run again. 
+Preconditions: What needs to be true before the use case starts is the animal and shelter class need to contain previously entered data for me to test and see if the information can be retained. 
+Success conditions: Once I rerun the program, all the previously given info should be saved and kept onto my program. 
+Main Success Scenario: In order to achieve this goal, I should add the shelter and animal data in my JSONfile before exiting the program and then have it read back when its starting up.  
+Alternate Scenario: another scenario of how I could save the data , if an error occurs or if data is not saved when program is rerun then we can have a file that the user manually updates whenever to have the data kept in that file incase no data was saved by the system. The downfall is that if anything is not added by the user then it will not be an updated version of the data but it will at least contain whatever was last worked on. 
+Frequency of Occurrence: data refresh should happen each time new data is entered and saved into the system and each time the program is exited and rerun. 
+
+
+Emma
+XML file input use case
+The primary actor in this use case would be either the shelter owner or system administrator.
+What the client wants is to be able to input an xml document of shelters and/or animals and have it be put into the system.
+Before this can be done, the user must have an xml document to input.
+We will know we have succeeded in this goal when every animal and/or shelter on the given xml file is input into the system correctly and with all the information given within the file.
+This can be done most optimally by having the user click a button to input information, select the file they want to input, and select a submit button which will then input the file all at once.
+If there is an error, the UI should give some indication of an issue and specify what the issue is.
+This feature will be used as often as a shelter that uses the xml file input needs to be input into the system.
+
+
+Iiman
+Use Case Name GUI
+Primary Actor - who does the use case?  The user is the primary actor 
+Stakeholders and Interests - what does everyone want? The general interest would be for the user to communicate visually with software and have it respond to the requests 
+Preconditions - what needs to be true before the use case starts?  Use case doesnt begin until a user selects desired option and inputs the correct and necessary information
+Success Conditions- what should be true at the end? The icons lead to the label hypothetically a shelter option after being clicked would present a list of shelters
+Main Success Scenario - How to achieve that optimally? Once a user clicks on the button or icon that they desire it will lead to whats required/described
+Alternate Scenarios -  if user runs into an issue we might ask to refresh and have a valid input or try again 
+Frequency of Occurrence - how often does the user do the use case? As often as the user needs
