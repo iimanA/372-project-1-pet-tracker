@@ -16,7 +16,3 @@ Emma
 -	The software should prompt the user for manual input when an xml file does not include information for a shelter and/or animal that is necessary.
 
 
-Iiman
--	The software shall log and save all new inputs of a new animal and its information i.e id and name to the associated shelter 
--	The software shall log all errors and failures to display information and the associated information i.e software prints out the class associated with error 
--	The software shall have a quit message displayed on every screen
