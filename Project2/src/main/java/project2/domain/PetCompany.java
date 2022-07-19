@@ -30,8 +30,8 @@ public class PetCompany {
 
     /**
      * Load information of animal from JSON file and add new animals to our current shelter list.
-     *
      * @param fileName name of the file that will be used as input. This file should be placed under resources folder
+     * @param type type of file
      * @throws IOException if the file is not accessible
      * @throws ParseException if the file doesnt have the same format as the sample file
      * @throws ClassCastException if the file doesnt have the same format as the sample file
@@ -113,7 +113,7 @@ public class PetCompany {
      * Export all animals in shelter with ID shelterId to a JSONObject
      *
      * @param type type of file that should be export
-     * @return JSONObject of the list of animals in the shelter
+     * @return file of the list of animals in the shelter
      * @return null if the shelter ID doesn't exist
      *
      */
@@ -161,6 +161,8 @@ public class PetCompany {
     public String[] getShelterList () {
         IShelterDataMapper shelterDataMapper = new ShelterDataMapper();
         Map<String, Shelter> shelterMap = shelterDataMapper.getShelterList();
+        if (shelterMap == null)
+            return new String[0];
         String[] shelterList = new String[shelterMap.size()];
         int i = 0;
         for (String key: shelterMap.keySet()) {
