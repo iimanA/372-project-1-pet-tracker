@@ -25,6 +25,26 @@ public class JsonIO implements IDataIO{
         String filePath = MyPath.getResourcePath(fileName) + ".json";
         return null;
     }
+        JSONParser parser = new JSONParser();
+
+        try (Reader reader = new FileReader()) {
+
+        JSONObject jsonObject = (JSONObject) parser.parse(reader);
+
+        String shelterId = (String) jsonObject.get("shelter_Id");
+        String shelter_name = (String) jsonObject.get("shelter_name");
+        String animalType = (String) jsonObject.get("animal_Type");
+        String animalId = (String) jsonObject.get("animal_Id");
+        float weight = (float) jsonObject.get("weight");
+        Date receiptDate = (Date) jsonObject.get("receipt_date");
+
+
+    } catch (IOException e) {
+        e.printStackTrace();
+    } catch (ParseException e) {
+        e.printStackTrace();
+    }
+
     /**
      * Export Shelter information to a json file, placed in resources
      */

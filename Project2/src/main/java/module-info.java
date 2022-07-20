@@ -4,6 +4,7 @@ module project2.ui {
     requires json.simple;
     requires com.opencsv;
     requires java.xml;
+    requires org.jdom2;
 
 
     opens project2.ui to javafx.fxml;
