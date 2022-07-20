@@ -6,6 +6,7 @@ module project2.ui {
     requires org.testng;
     requires org.junit.jupiter.api;
     requires java.xml;
+    requires org.jdom2;
 
 
     opens project2.ui to javafx.fxml;

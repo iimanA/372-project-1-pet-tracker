@@ -1,5 +1,6 @@
 package project2.domain;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.io.File;
 import java.io.IOException;
@@ -42,15 +43,18 @@ public class XmlIO implements IDataIO{
               String id = target.getAttributeValue("id");
               String Weight = target.getChildText("Weight");
               String name = target.getChildText("name");
-              Date ReceiptDate = target.getChildText("ReceiptDate");
+              String ReceiptDate = target.getChildText("ReceiptDate");
               float flWeight = Float.parseFloat(Weight); //parses the weight string into a float
+                Long lReceiptDate = Long.parseLong(ReceiptDate);// get the date in correct format
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+                Date dateReceipt  = dateFormat.parse(lReceiptDate.toString());
 
                 //adds info pulled from xml into the animal object
               thisAnimal.setName(name);
               thisAnimal.setAnimalId(id);
               thisAnimal.setWeight(flWeight);
               thisAnimal.setAnimalType(type);
-              thisAnimal.setReceiptDate(ReceiptDate);
+              thisAnimal.setReceiptDate(dateReceipt);
               animalList.add(thisAnimal);//adds the newly pulled animal to the animal arraylist
 
             }
