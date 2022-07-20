@@ -1,5 +1,6 @@
 package project2.domain;
 
+
 import java.io.*;
 import java.util.HashMap;
 import java.util.List;
@@ -9,6 +10,7 @@ public class ShelterDataMapper implements IShelterDataMapper, Serializable {
 
     private HashMap <String, Shelter> sList;
     private static final long serialVersionUID = 43L;
+
 
     public ShelterDataMapper() {
         sList = new HashMap<String, Shelter>();
@@ -25,11 +27,13 @@ public class ShelterDataMapper implements IShelterDataMapper, Serializable {
             } catch(Exception e) {
                 e.printStackTrace();
 
+
             }
 
         }
 
         public void serialize(String fileName) {
+
             try {
                 FileOutputStream fileOut = new FileOutputStream(fileName);
                 ObjectOutputStream out = new ObjectOutputStream(fileOut);

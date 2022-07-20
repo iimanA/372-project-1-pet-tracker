@@ -23,23 +23,12 @@ public class XmlIOTest {
             assertEquals(animalMap.get("abcdef").getName(), "Mopsy");
         } catch (IOException e) {
             throw new RuntimeException(e);
-        } catch (ParseException e) {
+        } catch (java.text.ParseException e) {
             throw new RuntimeException(e);
         }
     }
 
     @Test
     public void dataExport() {
-        XmlIO xmlIO = new XmlIO();
-        Map<String, Shelter> shelterMap = new HashMap<>();
-        Shelter shelter = new Shelter("xyz", "Another test shelter");
-        shelterMap.put("xyz", shelter);
-        try {
-            xmlIO.dataExport(shelterMap);
-            // whatever file
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 }
