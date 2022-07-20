@@ -54,7 +54,7 @@ public class AnimalDataMapper implements IAnimalDataMapper, Serializable{
 
         return aList.get(animalId);
     }
-
+ 
     /**
      * update animal information in Animal Database and Animal_Shelter database
      */
