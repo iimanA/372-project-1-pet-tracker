@@ -1,20 +1,21 @@
 package project2.domain;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.io.File;
-import java.io.IOException;
-import java.util.Date;
-import java.io.FileOutputStream;
-
-import jdk.internal.icu.text.UnicodeSet;
 import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.JDOMException;
 import org.jdom2.input.SAXBuilder;
-import java.util.List;
-import org.jdom2.output.Format;
 import org.jdom2.output.XMLOutputter;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 public class XmlIO implements IDataIO{
     /**
@@ -79,11 +80,13 @@ public class XmlIO implements IDataIO{
     /**
      * Export Shelter information to a xml file, placed in resources
  */
-        public void dataExport(Shelter shelter) throws IOException {
+
+    @Override
+    public Map<String, Shelter> convert(String fileName) throws IOException, ParseException, FileNotFoundException {
         ArrayList<Animal> shelterResidents = shelter.getAnimalList();
         Document doc = new Document();
         doc.setRootElement(new Element("Shelter"));
-        for (int i = 0; i < shelterResidents.size(); i++) {
+        for (int i = 0; i <= shelterResidents.size(); i++) {
             Animal currentAnim = shelterResidents.get(i);
             Element Animal = new Element("Animal");
             Animal.setAttribute("type",currentAnim.getAnimalType());
@@ -92,11 +95,41 @@ public class XmlIO implements IDataIO{
             Animal.addContent(new Element("name").setText(currentAnim.getName()));
             Animal.addContent(new Element("ReceiptDate").setText(currentAnim.getReceiptDate()));
         }
-            XMLOutputter xmlOutputter = new XMLOutputter();
-            try(FileOutputStream fileOutputStream =
-                        new FileOutputStream("src/main/resources/project2")){
-                xmlOutputter.output(new Document(), fileOutputStream);
-            }
+        XMLOutputter xmlOutputter = new XMLOutputter();
+        try(FileOutputStream fileOutputStream =
+                    new FileOutputStream("src/main/resources/project2")){
+            xmlOutputter.output(new Document(), fileOutputStream);
         }
     }
+       // return null;
+
+
+    @Override
+    public void dataExport(Map<String, Shelter> shelterList) throws FileNotFoundException {
+    Document doc = new Document();
+    doc.setRootElement(new Element("ShelterList"));
+    for (int shelter = 0; shelter <= shelterList.size(); shelter++) {
+            Shelter currentShelt = shelterList.get(shelter);
+        ArrayList<Animal> shelterResidents = currentShelt.getAnimalList();
+        Element elShelter = new Element("Shelter");
+        for (int i = 0; i < shelterResidents.size(); i++) {
+            Animal currentAnim = shelterResidents.get(i);
+            Element Animal = new Element("Animal");
+            Animal.setAttribute("type", currentAnim.getAnimalType());
+            Animal.setAttribute("id", currentAnim.getAnimalId());
+            Animal.addContent(new Element("Weight").setText(currentAnim.getWeight()));
+            Animal.addContent(new Element("Unit").setText("lbs"));
+            Animal.addContent(new Element("name").setText(currentAnim.getName()));
+            Animal.addContent(new Element("ReceiptDate").setText(currentAnim.getReceiptDate()));
+            }
+        }
+        XMLOutputter xmlOutputter = new XMLOutputter();
+        try(FileOutputStream fileOutputStream =
+                    new FileOutputStream("src/main/resources/project2")){
+            xmlOutputter.output(new Document(), fileOutputStream);
+        }
+    }
+
+}
+
 
