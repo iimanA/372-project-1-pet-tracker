@@ -1,20 +1,24 @@
 package project2.domain;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-class ShelterDataMapperTest {
+public class ShelterDataMapperTest {
 
     @Test
-    void get() {
+    public void get() {
     }
 
     @Test
-    void insert() {
+    public void update() {
     }
 
     @Test
-    void getShelterList() {
+    public void insert() {
+    }
+
+    @Test
+    public void getShelterList() {
     }
 }
