@@ -1,10 +1,11 @@
 package project2.domain;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import java.util.HashMap;
 
-public class AnimalDataMapper implements IAnimalDataMapper, Serializable{
+public class AnimalDataMapper implements IAnimalDataMapper, Serializable {
       
   	private HashMap <String, Animal> aList;
   	private static final long serialVersionUID = 42L;
