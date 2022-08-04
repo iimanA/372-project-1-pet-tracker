@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".controller.AddAnimalActivity">
+
+    <TextView
+        android:id="@+id/tvAddAnimalTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="50dp"
+        android:gravity="center"
+        android:text="Add Animals"
+        android:textColor="#673AB7"
+        android:textSize="34sp"
+        android:textStyle="bold"/>
+
+    <Button
+        android:id="@+id/btAddAnimal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvAddAnimalTitle"
+        android:layout_centerHorizontal="true"
+        android:onClick="importAnimal"
+        android:text="Import" />
+</RelativeLayout>
