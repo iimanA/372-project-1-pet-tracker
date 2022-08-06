@@ -6,17 +6,12 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
-import com.google.android.material.snackbar.Snackbar;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 
 import java.util.Date;
 
@@ -28,8 +23,9 @@ import edu.metrostate.sheltertracker.domains.ShelterTrackerApplication;
 
 public class AnimalActivity extends AppCompatActivity {
     public String animalId;
-    TextView tvAnimalId;
+    TextView tvAnimalName;
     TextView tvAnimalInfo;
+    Button btDeleteAnimal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,18 +33,20 @@ public class AnimalActivity extends AppCompatActivity {
         setContentView(R.layout.activity_animal);
         Bundle extras = getIntent().getExtras();
 
-        this.tvAnimalId = findViewById(R.id.tvAnimalId);
+        this.tvAnimalName = findViewById(R.id.tvAnimalName);
         this.tvAnimalInfo = findViewById(R.id.tvAnimalInfo);
+        this.btDeleteAnimal = findViewById(R.id.btDeleteAnimal);
 
         if (extras != null) {
             animalId = extras.getString("animalId");
             Animal animal = ((ShelterTrackerApplication)getApplication()).getAnimalInfo(animalId);
 
             if (animal == null) {
-                tvAnimalId.setText("Invalid Animal");
+                tvAnimalName.setText("Invalid Animal");
+                btDeleteAnimal.setVisibility(View.GONE);
             } else {
                 Shelter shelter = ((ShelterTrackerApplication)getApplication()).getShelterInfo(animal.getShelterId());
-                tvAnimalId.setText("Animal " + animalId);
+                tvAnimalName.setText("Animal " + animal.getName());
                 String shelterName;
                 if (shelter == null) {
                     shelterName = "N/A";
@@ -59,19 +57,20 @@ public class AnimalActivity extends AppCompatActivity {
                 tvAnimalInfo.setText(animalInfo);
             }
         } else {
-            tvAnimalId.setText("Invalid Animal");
+            tvAnimalName.setText("Invalid Animal");
+            btDeleteAnimal.setVisibility(View.GONE);
         }
     }
 
     public String getAnimalInfo (Animal animal, String shelterName) {
-        String animalInfo = String.format("Animal name: %s \nShelter id: %s  Shelter name: %s\n",
-                animal.getName(), animal.getShelterId(), shelterName);
+        String animalInfo = String.format("Animal id: %s \nShelter id: %s\nShelter name: %s\n",
+                animal.getAnimalId(), animal.getShelterId(), shelterName);
         Date releaseDate = animal.getReleaseDate();
         String releaseString = "";
         if (releaseDate.equals(new Date(0))) {
             releaseString = "N/A";
         } else releaseString = releaseDate.toString();
-        animalInfo += String.format("Type: %s   Weight:%.2f   Receipt Date: %s\n Release Date: %s\n",
+        animalInfo += String.format("Type: %s\nWeight:%.2f\nReceipt Date: %s\n Release Date: %s\n",
                 animal.getAnimalType(), animal.getWeight(), animal.getReceiptDate(), releaseString);
         return animalInfo;
     }
@@ -83,11 +82,16 @@ public class AnimalActivity extends AppCompatActivity {
             message = "Animal has already left the shelter!";
         } else {
             message = "Release success!";
+            Animal animal = ((ShelterTrackerApplication)getApplication()).getAnimalInfo(animalId);
+            Shelter shelter = ((ShelterTrackerApplication)getApplication()).getShelterInfo(animal.getShelterId());
+            String animalInfo;
+            if (shelter != null) {
+                animalInfo = getAnimalInfo(animal, shelter.getShelterName());
+            } else {
+                animalInfo = getAnimalInfo(animal, "N/A");
+            }
+            tvAnimalInfo.setText(animalInfo);
         }
-        Animal animal = ((ShelterTrackerApplication)getApplication()).getAnimalInfo(animalId);
-        Shelter shelter = ((ShelterTrackerApplication)getApplication()).getShelterInfo(animal.getShelterId());
-        String animalInfo = getAnimalInfo(animal, shelter.getShelterName());
-        tvAnimalInfo.setText(animalInfo);
 
         Dialog dialog = new AlertDialog.Builder(this).setTitle("Release Animal").setCancelable(false)
                 .setMessage(message)
@@ -105,4 +109,8 @@ public class AnimalActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void backAnimalList(View view) {
+        Intent intent = new Intent(this, AnimalListActivity.class);
+        startActivity(intent);
+    }
 }

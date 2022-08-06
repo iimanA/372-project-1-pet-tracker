@@ -86,6 +86,7 @@ public class ShelterTrackerApplication extends Application {
                 if (animal == null) {
                     animalDataMapper.insert(importAnimals.get(key));
                     animalMap.put(key, importAnimals.get(key));
+                    shelterMap.get(shelterId).addAnimal(importAnimals.get(key));
                 } else {
                     errorNote += String.format("Animal %s already exist in shelter %s\n", animal.getAnimalId(), animal.getShelterId());
                 }
@@ -122,10 +123,11 @@ public class ShelterTrackerApplication extends Application {
         return SUCCESS;
     }
 
-    public Map <String, Animal> showAnimalList (String shelterId) {
+    public List <Animal> showAnimalsByShelter (String shelterId) {
         Shelter shelter = shelterMap.get (shelterId);
         if (shelter == null) return null;
-        return shelter.getAnimalList ();
+        List<Animal> animalList = new ArrayList<>(shelter.getAnimalList().values());
+        return animalList;
     }
 
     public Animal getAnimalInfo (String animalId) {
