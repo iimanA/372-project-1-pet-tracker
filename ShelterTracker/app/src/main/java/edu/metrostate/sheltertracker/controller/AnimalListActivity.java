@@ -3,6 +3,7 @@ import edu.metrostate.sheltertracker.R;
 import edu.metrostate.sheltertracker.domains.Animal;
 import edu.metrostate.sheltertracker.domains.Shelter;
 import edu.metrostate.sheltertracker.domains.ShelterTrackerApplication;
+import edu.metrostate.sheltertracker.domains.AnimalAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -24,7 +25,18 @@ public class AnimalListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_animal_list);
 
         ListView animallv = findViewById(R.id.animal_list);
-        animallv.setAdapter(new )
+        animallv.setAdapter(new AnimalAdapter(this,
+                ((ShelterTrackerApplication)getApplication()).getAnimalList()));
+        animallv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Log.i("itemClick", String.valueOf(i));
+                Animal animal = ((ShelterTrackerApplication)getApplication()).getAnimalList().get(i);
+                Intent intent = new Intent(AnimalListActivity.this, AnimalActivity.class);
+                intent.putExtra("animalId", animal.getAnimalId());
+                startActivity(intent);
+            }
+        });
 
 
     }
