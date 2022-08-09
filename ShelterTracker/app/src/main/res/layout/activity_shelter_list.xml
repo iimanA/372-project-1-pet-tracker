@@ -13,12 +13,42 @@
         android:text="List of Shelters"
         android:textSize="16sp"/>
 
-
     <ListView
         android:id="@+id/shelter_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tvShelterTitle" />
+    
+    <LinearLayout
+        android:id="@+id/buttonPanel"
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        android:orientation="horizontal">
+
+    <Button
+        android:layout_weight="1"
+        android:id="@+id/import_xml_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Import XML"/>
+
+    <Space
+        android:layout_width="10dp"
+        android:layout_height="2dp"/>
 
 
-</RelativeLayout>
+    <Button
+        android:layout_weight="1"
+        android:id="@+id/import_json_btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Import JSON"/>
+
+
+
+</LinearLayout>
+    </RelativeLayout>
+    
